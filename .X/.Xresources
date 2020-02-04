@@ -27,7 +27,7 @@ Xft.lcdfilter:          lcddefault
 URxvt.transparent: true
 URxvt.shading: 30
 URxvt.internalBorder:    15
-URxvt.externalBorder:    5
+URxvt.externalBorder:    0
 URxvt.lineSpace:        0
 !urxvt*shading:          30
 !URxvt.depth:             32
@@ -55,6 +55,7 @@ URxvt*boldFont:          fonts
 URxvt.letterSpace:       true
 
 !! Keybinding
+urxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
 URxvt.keysym.C-Down:  resize-font:smaller
 URxvt.keysym.C-Up:    resize-font:bigger
 !URxvt.keysym.C-Up:       perl:font-size:increase
@@ -97,4 +98,4 @@ URxvt.iso14755_52:         false
 Xcursor.theme:             Venom
 
 !! Color theme
-#include "/home/ali/.colors/linux"
+#include "/home/ali/.colors/default"
