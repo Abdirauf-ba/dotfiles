@@ -23,53 +23,15 @@ interval = 5
 }
 
 
-# customize urgent
-#py3status {
-#   urgent_background  = 'blue'
-#   urgent_foreground = 'white'
-#   urgent_border = 'red'
-#   urgent_border_bottom = 1
-   urgent_border_left = 1
-   urgent_border_right = 1
-   urgent_border_top = 1
-}
 
-#general {
-#    interval 		= 1
-#    colors 		= true
-#    color_good      = '#88b090'
-#    color_degraded  = '#ccdc90'
-#    color_bad       = '#e89393'
-#}
-
-
-
-
-#general {  
-#    colors = true  
-#    color_good =     '#88b090'  
-#    color_degraded = '#ccdc90'  
-#    color_bad =      '#e89393'   
-#}
-
-#general {
-#   colors = true
-#   color_good = "#00A5FF" #some neon blue
-#   color_degraded = "#006298"
-#   color_bad = "#FF0000"
-#   output_format = i3bar
-#   interval = 5
-#}
-
-
+#order += “read_file BRIGHTNESS”
 order += "run_watch DHCP"
 #order += "read_file uptime"
-#order += “read_file BRIGHTNESS”
-order += "ipv6"
+#order += "ipv6"
 order += "cpu_temperature 0"
 order += "disk /"
 order += "run_watch VPN"
-order += "imap"
+#order += "imap"
 order += "wireless wlp3s0"
 order += "ethernet enp2s0"
 order += "battery 1"
@@ -78,30 +40,33 @@ order += "tztime local"
 order += "volume master"
 
 
-imap {
-    cache_timeout = 60
-    imap_server = 'imap.myprovider.com'
-    mailbox = 'INBOX'
-    password = 'coconut'
-    port = '993'
-    user = 'mylogin'
-    on_click 1 = "exec thunderbird"
+run_watch DHCP {
+pidfile = "/var/run/dhclient*.pid"
+}
+
+cpu_temperature 0{
+        format = "%degrees °C"
+        path="/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input"
+        max_threshold=75
+}
+
+disk "/" {
+format = "%avail"
 }
 
 
-
-volume master {
-        format = "♪: %volume"
-        format_muted = "♪: muted (%volume)"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+run_watch VPN {
+pidfile = "/var/run/vpnc/pid"
 }
 
-#read_file BRIGHTNESS {
-#	format = “BRI %content”
-#	path = “/home/ali/.config/brightness”
-#	max_characters = 5
+#imap {
+#    cache_timeout = 60
+#    imap_server = 'imap.myprovider.com'
+#    mailbox = 'INBOX'
+#    password = 'coconut'
+#    port = '993'
+#    user = 'mylogin'
+#    on_click 1 = "exec thunderbird"
 #}
 
 wireless wlp3s0 {
@@ -115,28 +80,6 @@ format_up = "E: %ip (%speed)"
 format_down = "E: down"
 }
 
-#read_file uptime {
-#        path = "/proc/uptime"
-#}
-
-
-#battery 1 {
-#    format = "%status %percentage %remaining"
-#    format_down = ""
-#    last_full_capacity = true
-#    integer_battery_capacity = true
-#    low_threshold = 11
-#    threshold_type = percentage
-#    hide_seconds = true
-#    status_chr = " "
-#    status_bat = " "
-#    status_unk = " "
-#    status_full = " "
-#}
-
-
-
-
 battery 1 {
         format = "%status %percentage %remaining %emptytime"
         format_down = "No battery"
@@ -149,42 +92,18 @@ battery 1 {
         #low_threshold = 20
 }
 
-
-
-
-#battery 1 {
-#format = "%status %percentage %remaining"
-#}
-
-run_watch DHCP {
-pidfile = "/var/run/dhclient*.pid"
+load {
+format = "%1min"
 }
-
-run_watch VPN {
-pidfile = "/var/run/vpnc/pid"
-}
-
-#cpu_temperature 0 {
-#        format = "T: %degrees °C"
-#        path = "/sys/devices/platform/coretemp.0/temp1_input"
-#}
-
-cpu_temperature 0{
-        format = "%degrees °C"
-        path="/sys/devices/platform/coretemp.0/temp2_input"
-        max_threshold=75
-}
-
-
 
 tztime local {
 format = "%Y-%m-%d %H:%M:%S"
 }
 
-load {
-format = "%1min"
-}
-
-disk "/" {
-format = "%avail"
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
 }
